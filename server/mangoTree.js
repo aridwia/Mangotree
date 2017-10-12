@@ -35,6 +35,7 @@ class FruitTree {
     this.buah = [];
     this.statusKesehatan = true;
     this.maxUmur = 20;
+    this.panen = ''
   }
 
   getAge () {
@@ -84,7 +85,7 @@ class FruitTree {
       }
     }
     let fruitsHarvested = this.buah.length;
-    // this.buah = []
+    this.panen = this.buah.length
     return `${fruitsHarvested} (${goodFruit} good, ${badFruit} bad)`
   }
 }
@@ -108,11 +109,11 @@ class Mango extends Fruit{
 
    let grow = cron.schedule('*/5 * * * * * ', function () {
      if (mangoTree.statusKesehatan !== false) {
-       mangoTree.grow(100)
+       mangoTree.grow(1000)
        mangoTree.produceFruits(10)
        mangoTree.harvest()
        db.ref('tree').set(mangoTree)
-       console.log(`[Year ${mangoTree.umur} Report] Height = ${mangoTree.tinggi} Meter| Fruits harvested = ${mangoTree.harvest()}`)
+       console.log(`[Year ${mangoTree.umur} Report] Height = ${mangoTree.tinggi} Meter| Fruits harvested = ${mangoTree.panen}`)
        //  } while (mangoTree.statusKesehatan != false)
      } else {
        grow.stop()

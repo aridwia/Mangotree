@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mango-tree</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <h1>{{ msg }}</h1>
+            <img v-if="mango_tree.umur < 8" src="src/assets/image/pohon1.jpg" alt="">
+            <img v-else-if="mango_tree.umur < 11" src="src/assets/image/pohon2.jpg" alt="">
+            <img v-else-if="mango_tree.umur < 15" src="src/assets/image/pohon3.jpg" alt="">
+            <img v-else-if="mango_tree.umur < 18" src="src/assets/image/pohon4.jpg" alt="">
+            <img v-else-if="mango_tree.umur > 18" src="src/assets/image/pohon5.jpg" alt="">
+            <img v-else-if="mango_tree.statusKesehatan === false" src="./assets/image/pohon6.png" alt="">
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="panel panel-primary" v-if="mango_tree.statusKesehatan">
+              <div class="panel-heading">
+                <h3 class="panel-title">Status</h3>
+              </div>
+              <div class="panel-body">
+                Sehat
+              </div>
+            </div>
+            <div class="panel panel-danger" v-else>
+              <div class="panel-heading">
+                <h3 class="panel-title">Status</h3>
+              </div>
+              <div class="panel-body">
+                Modars
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Tinggi</h3>
+              </div>
+              <div class="panel-body">
+                {{mango_tree.tinggi}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h3 class="panel-title">Umur</h3>
+              </div>
+              <div class="panel-body">
+                {{mango_tree.umur}}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Panen</h3>
+              </div>
+              <div class="panel-body">
+                {{mango_tree.panen}} Buah
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <script>
+    var config = {
+      apiKey: "AIzaSyA-BR9MGjt6bdRcZ-gmov1ynrjB3_ETKig",
+      authDomain: "battle-ex-6f625.firebaseapp.com",
+      databaseURL: "https://battle-ex-6f625.firebaseio.com",
+      projectId: "battle-ex-6f625",
+      storageBucket: "battle-ex-6f625.appspot.com",
+      messagingSenderId: "623899963707"
+    };
+
+    firebase.initializeApp(config);
+
+    var db = firebase.database()
+
+      var app = new Vue({
+        el: '#app',
+        data: {
+          msg: 'Pohon Mangga ku '
+        },
+    
+        firebase: function () {
+          return {
+            mango_tree: {
+              source: db.ref('tree'),
+              asObject: true
+            }
+          }
+        },
+        created () {
+          console.log(this.mango_tree.statusKesehatan);
+        }
+      })
+    </script>
+  </body>
+</html>
